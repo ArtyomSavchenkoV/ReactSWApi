@@ -3,23 +3,19 @@ class SwapiService {
     _apiBase = "https://swapi.co/api/";
     _imageBase = 'https://starwars-visualguide.com/assets/img/';
 
-
     getResource = async (url) => {
             const res = await fetch(this._apiBase + url);
 
             if (!res.ok) {
                 throw new Error(`could not fetch ${url}, received ${res.status}`);
             }
-
-            const body = await res.json();
-            return body;
+            return await res.json();
         };
 
     //people
 
     getAllPeople = async() => {
         const result = await this.getResource(`people/`);
-        //console.log(result.results.map(this._transformPerson));
         return result.results.map(this._transformPerson);
     };
 
@@ -28,25 +24,16 @@ class SwapiService {
         return this._transformPerson(person);
     };
 
-    getPersonImage = ( {id} ) => {
-        return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
-    };
-
     //planets
 
     getAllPlanets = async () => {
         const result = await this.getResource(`planets/`);
-        return result.results.map((el) => {return this._transformPlanet(el)});
-        //return result.results.map(this._transformPlanet); //его вариант
+        return result.results.map(this._transformPlanet);
     };
 
     getPlanet = async (planetId) => {
         const planet = await this.getResource(`planets/${planetId}/`);
         return this._transformPlanet(planet)
-    };
-
-    getPlanetImage = ( {id} ) => {
-        return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
     };
 
     //star ships
@@ -59,10 +46,6 @@ class SwapiService {
     getStarship = async (starshipId) => {
         const starShip = await this.getResource(`starships/${starshipId}/`);
         return this._transformStarship(starShip);
-    };
-
-    getStarshipImage = ( {id} ) => {
-        return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
     };
 
     //extract
@@ -113,6 +96,6 @@ class SwapiService {
             diameter: planet.diameter
         };
     }
-};
+}
 
 export default SwapiService;

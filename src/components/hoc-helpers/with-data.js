@@ -9,31 +9,41 @@ const withData = (View) => {
             super();
             this.state = {
                 data: null,
-                loading: false,
+                loading: true,
                 isError: false
             }
         }
 
         componentDidMount (){
-            console.log(
-                'props = ', this.props);
+            this.update();
+        }
+
+        componentDidUpdate(prevProps) {
+            if (prevProps.getData !== this.props.getData) {
+                this.update();
+            }
+        }
+
+        update() {
+            this.setState({loading: true, error: false});
             this.props.getData()
                 .then((itemList) => {
-                    this.setState({data: itemList});
+                    this.setState({data: itemList, loading: false});
                 })
                 .catch((e) => {
                     console.log(`Item list throw error when tried to get elements: ${e}`);
-                    this.setState({isError: true})
+                    this.setState({isError: true, loading: false})
                 })
         }
 
         render(){
-            if (this.state.isError) {
+            const { data, loading, isError } = this.state;
+
+            if (isError) {
                 return <ErrorIndicator />
             }
 
-            const { data } = this.state;
-            if (!data) {
+            if (loading) {
                 return <Spinner />
             }
 

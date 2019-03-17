@@ -4,11 +4,11 @@ import './item-list.css';
 
 const ItemList = (props) => {
 
-    const {onItemSelected, selectedItemOfList, children: renderLabel, data} = props;
+    const {onItemSelected, selectedItem, children: renderLabel, data} = props;
     const items =  data.map((element) => {
         const { id } = element;
         let className = "list-group-item";
-        className += (selectedItemOfList === id) ? " selected" : "";
+        className += (selectedItem === id) ? " selected" : "";
         return (
             <li
                 className={className}

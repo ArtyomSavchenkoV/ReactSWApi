@@ -11,7 +11,7 @@ const CardFrame = ({children}) => {
             {children}
         </div>
     )
-}
+};
 
 
 const EmptyCard = ({ label }) => {
@@ -23,8 +23,9 @@ const EmptyCard = ({ label }) => {
 };
 
 const ItemCard = ({itemData, children: records}) => {
+
     const {name, image} = itemData;
-    //console.log(records);
+
 
     return (
         <React.Fragment>

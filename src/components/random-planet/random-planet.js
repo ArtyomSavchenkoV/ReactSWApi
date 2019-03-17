@@ -8,6 +8,20 @@ import './random-planet.css';
 
 export default class RandomPlanet extends Component {
 
+    static defaultProps = {
+        updateInterval: 10000
+    };
+
+    static propTypes = {
+        updateInterval: (props, propName, componentName) => {
+            const value = props[propName];
+            if(typeof value === 'number' && !isNaN(value)) {
+                return null;
+            }
+
+            return new TypeError(`${componentName}: ${propName} is not a number!`)
+        }
+    };
 
     constructor() {
         super();
@@ -23,16 +37,17 @@ export default class RandomPlanet extends Component {
     }
 
     componentDidMount() {
+        const { updateInterval } = this.props;
         this.updatePlanet();
-        this.intervalId = setInterval(this.updatePlanet, 7000);
+        this.intervalId = setInterval(this.updatePlanet, updateInterval);
     }
 
     componentWillUnmount() {
         clearInterval(this.intervalId);
     }
 
-
     onError = (err) => {
+        console.log(`Was catch error: ${err}`)
         this.setState({
             error: true,
             loading: false
@@ -99,4 +114,4 @@ const PlanetView = ({ planet }) => {
             </div>
         </React.Fragment>
     )
-}
+};

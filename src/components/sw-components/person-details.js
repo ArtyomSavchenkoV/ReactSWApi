@@ -24,24 +24,9 @@ const mapMethodsToProps = (swapiService) => {
     }
 };
 
-export default withSwapiService(PersonDetail, mapMethodsToProps);
+export default withSwapiService(mapMethodsToProps)(PersonDetail);
 
 /*
-
-        <SwapiServiceConsumer>
-            {
-                ({getPerson}) => {
-                    const DDW = detailsDataWrapper(ItemDetails, CardFrame, EmptyCard, getPerson);
-                    return(
-                        <DDW {...props} emptyLabel="Please select a character:">
-                            <Record field="gender" label="Gender:"/>
-                            <Record field="birthYear" label="Birth year:"/>
-                            <Record field="eyeColor" label="Eye color:"/>
-                        </DDW>
-                    )
-                }
-
-            }
-        </SwapiServiceConsumer>
+https://starwars-visualguide.com/assets/img/characters/2.jpg
 
  */

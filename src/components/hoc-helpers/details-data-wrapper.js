@@ -10,7 +10,7 @@ const detailsDataWrapper = (View, CardFrame, EmptyCard, getData) => {
             super();
             this.state = {
                 loading: true,
-                itemData: {},
+                itemData: null,
                 error: false
             };
         }
@@ -20,9 +20,12 @@ const detailsDataWrapper = (View, CardFrame, EmptyCard, getData) => {
         }
 
         componentDidUpdate(prevProps) {
-            if (prevProps.itemId !== this.props.itemId) {
+            if (prevProps.itemId !== this.props.itemId ||
+            prevProps.getData !== this.props.getData) {
                 this.setState(() => {
-                    return {loading: true}
+                    return {loading: true,
+                        itemData: null,
+                        error: false}
                 });
                 this.updateItem();
             }
@@ -50,7 +53,6 @@ const detailsDataWrapper = (View, CardFrame, EmptyCard, getData) => {
 
 
         render(){
-
             const { loading, itemData, error } = this.state;
             const { itemId, emptyLabel } = this.props;
 
