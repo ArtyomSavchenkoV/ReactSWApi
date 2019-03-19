@@ -8,7 +8,13 @@ import StubSwapiService from '../../services/stub-svapi-service';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import { PeoplePage, StarshipPage, PlanetPage } from '../pages';
+import {
+    PeoplePage,
+    StarshipPage,
+    PlanetPage,
+    LoginPage,
+    SecretPage
+} from '../pages';
 import ErrorIndicator from '../error-indicator';
 
 import { StarshipDetail } from '../sw-components';
@@ -20,6 +26,7 @@ export default class App extends Component{
         super();
         this.state = {
             swapiService: new SwapiService(),
+            isLoggedIn: false,
             hasError: false
         }
     }
@@ -35,13 +42,18 @@ export default class App extends Component{
         })
     };
 
+    onLogin = () => {
+        this.setState(({isLoggedIn}) => {return {isLoggedIn: !isLoggedIn}})
+    };
+
     render() {
-        if (this.state.hasError) {
+        const { hasError, swapiService, isLoggedIn } = this.state;
+        if (hasError) {
             return <ErrorIndicator />;
         }
 
         return (
-            <SwapiServiceProvider value={this.state.swapiService}>
+            <SwapiServiceProvider value={swapiService}>
                 <Router>
                     <div className="stardb-app">
                         <Header onServiceChange={this.onServiceChange}/>
@@ -75,6 +87,18 @@ export default class App extends Component{
                             component={({ match }) => {
                                 return <StarshipDetail itemId={match.params.id}/>;
                             }}
+                        />
+                        <Route
+                            path='/secret/'
+                            render={({ match }) => (
+                                <SecretPage isLoggedIn={isLoggedIn}/>
+                            )}
+                        />
+                        <Route
+                            path='/login/'
+                            render={({ match }) => (
+                                <LoginPage isLoggedIn={isLoggedIn} onLogin={this.onLogin}/>
+                            )}
                         />
 
 

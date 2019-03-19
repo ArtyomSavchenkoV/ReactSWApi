@@ -16,17 +16,23 @@ const Header = ({ onServiceChange }) => {
                   <Link to="/people/">Peoples</Link>
               </li>
               <li>
-                  <Link to="/starships/">Star ships</Link>
+                  <Link to="/starships/">Star&nbsp;ships</Link>
               </li>
               <li>
                   <Link to="/planets/">Planets</Link>
+              </li>
+              <li>
+                  <Link to="/login">Login</Link>
+              </li>
+              <li>
+                  <Link to="/secret">Secret</Link>
               </li>
           </ul>
           <button
               className="btn btn-primary btn-sm"
               onClick={onServiceChange}
           >
-              Change Service
+              Change&nbsp;Service
           </button>
       </div>
     );
